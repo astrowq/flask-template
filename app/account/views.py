@@ -278,9 +278,12 @@ def before_request():
     """Force user to confirm email before accessing login-required routes."""
     if current_user.is_authenticated \
             and not current_user.confirmed \
-            and request.endpoint[:8] != 'account.' \
             and request.endpoint != 'static':
-        return redirect(url_for('account.unconfirmed'))
+        try:
+            if request.endpoint[:8] != 'account.':
+                return redirect(url_for('account.unconfirmed'))
+        except:
+            pass
 
 
 @account.route('/unconfirmed')
