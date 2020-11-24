@@ -14,6 +14,7 @@ def send_email(recipient, subject, template, **kwargs):
             app.config['EMAIL_SUBJECT_PREFIX'] + ' ' + subject,
             sender=app.config['EMAIL_SENDER'],
             recipients=[recipient])
+        print(msg)
         msg.body = render_template(template + '.txt', **kwargs)
         msg.html = render_template(template + '.html', **kwargs)
         mail.send(msg)
